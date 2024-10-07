@@ -29,7 +29,8 @@ int non_space_char(char c)
    Returns a pointer if str does not contain any tokens. */
 char *token_start(char *str)
 {
-  while(*str){
+  while(*str)
+  {
     if(non_space_char(*str))
     {
       return str;
@@ -37,7 +38,6 @@ char *token_start(char *str)
     str++;
   }
   return str;
-  }
 }
 
 /* returns a pointer terminator char following *token */
