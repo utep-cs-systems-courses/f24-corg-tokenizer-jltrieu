@@ -1,5 +1,6 @@
 # include <stdio.h>
 # include "tokenizer.h"
+# include "history.h"
 
 void clear_string(char *str)
 {
@@ -14,6 +15,7 @@ int main()
   //fgets(input, 255, stdin);
 
   char **tokens;
+  List *history = init_history();
   puts("welcome!");
 
   while(1){
@@ -24,17 +26,23 @@ int main()
     case '1':
       printf("Enter a string to tokenize: ");
       while(*fgets(input, 255, stdin) == '\n');
-      //add_history(history, copy_str(input, 255));
+      add_history(history, copy_str(input, 255));
       tokens = tokenize(input);
       print_tokens(tokens);
       clear_string(input);
       break;
     case '2':
-      printf("This option is currently under construction!\n");
+      print_history(history);
+      printf("Enter the ID of an entry to recall: ");
+      while((c = getchar()) == '\n');
+      c = c - 48;
+      tokens = tokenize(get_history(history, c));
+      print_tokens(tokens);
+      free_tokens(tokens);
       break;
     case '3':
       printf("freeing resources....");
-      //free_history(history);
+      free_history(history);
       printf("finished, bye!\n");
       goto done;
     case '\n':
